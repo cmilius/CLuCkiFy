@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CLuCkiFy.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace CLuCkiFy
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = new MainPageViewModel();  //set up the main page to be bindable to the viewmodel
         }
     }
 }
