@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace CLuCkiFy.ViewModels
 {
@@ -30,20 +31,29 @@ namespace CLuCkiFy.ViewModels
 
         async Task CluckifyText()
         {
-            var cLucKEd = "";
+            CLuCk = CluckifyString(CLuCk);
+            OnPropertyChanged(nameof(CLuCk));
 
-            foreach(char c in CLuCk)
+            //copy to keyboard
+            await Clipboard.SetTextAsync(CLuCk);
+
+            //notify user
+            await Application.Current.MainPage.DisplayAlert(CluckifyString("Success!"), CluckifyString("Copied to clipboard"), "ok");
+
+        }
+
+        private string CluckifyString(string input)
+        {
+            var cLucKEd = "";
+            foreach (char c in input)
             {
                 var r = new Random();
                 int rInt = r.Next(0, 2);
 
-                cLucKEd +=  rInt==0 ? c.ToString().ToLower() : c.ToString().ToUpper();
+                cLucKEd += rInt == 0 ? c.ToString().ToLower() : c.ToString().ToUpper();
             }
 
-            CLuCk = cLucKEd;
-
-            OnPropertyChanged(nameof(CLuCk));
-            
+            return cLucKEd;
         }
     }
 }
